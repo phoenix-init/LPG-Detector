@@ -1,0 +1,12 @@
+{
+  "extends": "@repo/typescript-config/base",
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@prisma/client": ["./generated/prisma/client"],
+      "@lib/*": ["./src/lib/*"]
+    }
+  },
+  "include": ["src", "prisma", "prisma.config.ts"],
+  "exclude": ["node_modules", "dist", "generated/prisma"]
+}

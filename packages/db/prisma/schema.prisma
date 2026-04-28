@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String         @id @default(uuid())
+  name         String
+  email        String?        @unique
+  phoneNumber  String?        @unique
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  deviceAccess DeviceAccess[]
+
+  @@map("users")
+}
+
+model IoTDevice {
+  id                   String          @id @default(uuid())
+  name                 String
+  serialNumber         String          @unique
+  isOnline             Boolean         @default(false)
+  consecutiveLeakCount Int             @default(0)
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  readings             SensorReading[]
+  users                DeviceAccess[]
+
+  @@map("iot_devices")
+}
+
+model SensorReading {
+  id        String    @id @default(uuid())
+  deviceId  String
+  gasLevel  Float
+  isLeaking Boolean
+  timestamp DateTime  @default(now())
+  device    IoTDevice @relation(fields: [deviceId], references: [id])
+
+  @@map("sensor_readings")
+}
+
+model DeviceAccess {
+  id       String    @id @default(uuid())
+  userId   String
+  deviceId String
+  role     Role      @default(MEMBER)
+  user     User      @relation(fields: [userId], references: [id])
+  device   IoTDevice @relation(fields: [deviceId], references: [id])
+
+  @@unique([userId, deviceId])
+  @@map("device_accesses")
+}
+
+enum Role {
+  OWNER
+  MEMBER
+}
