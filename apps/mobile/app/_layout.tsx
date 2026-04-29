@@ -8,7 +8,8 @@ import { useEffect } from "react";
 const RootContent = () => {
 
   const [fontsLoaded] = useFonts({
-    'sf-regular': require('@/assets/fonts/SF-Pro-Rounded-Regular.ttf')
+    'sf-regular': require('@/assets/fonts/SF-Pro-Rounded-Regular.ttf'),
+    'sf-semibold': require('@/assets/fonts/SF-Pro-Text-Semibold.otf'),
   })
 
   useEffect(() => {
