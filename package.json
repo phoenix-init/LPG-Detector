@@ -16,10 +16,5 @@
   "packageManager": "pnpm@10.33.2",
   "engines": {
     "node": ">=18"
-  },
-  "pnpm": {
-    "overrides": {
-      "lightningcss": "1.30.1"
-    }
   }
 }
