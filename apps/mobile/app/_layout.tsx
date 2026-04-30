@@ -11,6 +11,7 @@ const RootContent = () => {
     'sf-regular': require('@/assets/fonts/SF-Pro-Rounded-Regular.ttf'),
     'sf-semibold': require('@/assets/fonts/SF-Pro-Text-Semibold.otf'),
     'sf-light': require('@/assets/fonts/sf-pro-text-light.ttf'),
+    'inter-bold': require('@/assets/fonts/Inter_18pt-Bold.ttf')
   })
 
   useEffect(() => {

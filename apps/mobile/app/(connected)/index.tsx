@@ -27,13 +27,11 @@ const Index = () => {
   if (isOpeningQR)
     return <App />
 
-  if (isVerifying) {
+  if (isVerifying)
     return <VerifyLoader />;
-  }
 
-  if (isFinished) {
+  if (isFinished)
     return <Redirect href="/SuccessScreen" />
-  }
 
   const handleConnect = () => {
     console.log("Form Data to send to backend:", deviceId)

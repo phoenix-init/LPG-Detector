@@ -55,7 +55,7 @@ export default function ProgressBar({ progress }: ProgressBarProps) {
 
       </View>
 
-      <Text className="text-white font-sf-bold text-[15px] text-center mt-3">
+      <Text className="text-white font-inter-bold text-[15px] text-center mt-3">
         {Math.round(clampedProgress)} %
       </Text>
     </View>
