@@ -4,28 +4,50 @@ import AuthBackground from '@/components/ui/AuthBackground'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import InputField from '@/components/ui/InputField'
 import LiquidGlassButton from '@/components/ui/LiquidGlass'
-import { Link } from 'expo-router'
+import { Link, Redirect } from 'expo-router'
 import { BlurView } from 'expo-blur'
 import Modal from 'react-native-modal'
 import { icons } from '@/constants/icon'
 import App from '@/components/camera/Scanner'
 import { useQrStore } from '@/store/useQrStore'
+import { useLoadingStore } from '@/store/useLoading'
+import VerifyLoader from '@/components/loader/VerifyLoader'
+import { useFinishLoadingStore } from '@/store/useFinishLoading'
+import { useDeviceIdStore } from '@/store/useDeviceId'
 
 const Index = () => {
   
-  const [deviceId, setDeviceId] = useState<string>("")
+  const { deviceId, setDeviceId } = useDeviceIdStore()
   
   const [error, setError] = useState<string | null>(null)
-  const {isOpeningQR, setIsOpeningQR} = useQrStore()
+  const { isOpeningQR, setIsOpeningQR } = useQrStore()
+  const { isVerifying, setIsVerifying } = useLoadingStore();
+  const { isFinished } = useFinishLoadingStore();
 
   if (isOpeningQR)
     return <App />
 
+  if (isVerifying) {
+    return <VerifyLoader />;
+  }
+
+  if (isFinished) {
+    return <Redirect href="/SuccessScreen" />
+  }
+
   const handleConnect = () => {
     console.log("Form Data to send to backend:", deviceId)
+    if (!deviceId) {
+      setError("Please enter a Device ID");
+      return;
+    }
+    setDeviceId(deviceId);
+    setIsVerifying();
+    
     // Send form data to backend here
-    // Simulating a backend error so you can see the UI!
-    setError("Invalid OTP. Please check the code sent to your phone.")
+    // Simulating a backend error
+    // TODO: when checking the device ID, if the device ID is valid, store it in a zustand store
+    // and then
   }
 
   return (
