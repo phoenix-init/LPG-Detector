@@ -8,6 +8,7 @@ module.exports = {
       fontFamily: {
         "sf-regular": ["sf-regular", "sans-serif"],
         "sf-semibold": ["sf-semibold", "sans-serif"],
+        "sf-light": ["sf-light", "sans-serif"],
       },
     },
   },

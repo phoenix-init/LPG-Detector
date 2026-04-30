@@ -10,6 +10,7 @@ const RootContent = () => {
   const [fontsLoaded] = useFonts({
     'sf-regular': require('@/assets/fonts/SF-Pro-Rounded-Regular.ttf'),
     'sf-semibold': require('@/assets/fonts/SF-Pro-Text-Semibold.otf'),
+    'sf-light': require('@/assets/fonts/sf-pro-text-light.ttf'),
   })
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const RootContent = () => {
       <Stack.Screen name="welcome" />
       <Stack.Screen name="(auth)" />
       <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(connected)" />
     </Stack>
   )
 }

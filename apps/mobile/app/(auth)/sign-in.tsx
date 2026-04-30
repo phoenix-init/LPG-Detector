@@ -63,10 +63,8 @@ const SignIn = () => {
 
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          className="auth-screen"
         >
           <ScrollView
-              className="auth-scroll"
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
           >

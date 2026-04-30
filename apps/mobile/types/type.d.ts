@@ -7,12 +7,14 @@ declare global {
         rightElement?: React.ReactNode;
     }
     interface LiquidGlassButtonProps {
-        title: string;
+        title?: string;
         onPress: () => void;
         icon?: ImageSourcePropType;
         className?: string;
         textClassName?: string;
         disabled?: boolean;
+        iconClassName?: string;
+        iconSize?: string;
     }
 }
 

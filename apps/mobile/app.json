@@ -46,6 +46,13 @@
             "./assets/fonts/SF-Pro-Rounded-Regular.ttf"
           ]
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "barcodeScannerEnabled": true
+        }
       ]
     ],
     "experiments": {
