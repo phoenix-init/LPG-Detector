@@ -46,6 +46,7 @@ model SensorReading {
   timestamp DateTime  @default(now())
   device    IoTDevice @relation(fields: [deviceId], references: [id])
 
+  @@index([deviceId, timestamp(sort: Desc)])
   @@map("sensor_readings")
 }
 
@@ -58,6 +59,7 @@ model DeviceAccess {
   device   IoTDevice @relation(fields: [deviceId], references: [id])
 
   @@unique([userId, deviceId])
+  @@index([deviceId])
   @@map("device_accesses")
 }
 
