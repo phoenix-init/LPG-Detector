@@ -8,7 +8,7 @@ import LiquidGlassButton from '@/components/ui/LiquidGlass'
 import { router } from 'expo-router'
 
 export default function SuccessScreen() {
-  const { deviceId } = useDeviceIdStore(); 
+  const { deviceId } = useDeviceIdStore();
    
   return (
     <AuthBackground>
@@ -57,7 +57,9 @@ export default function SuccessScreen() {
               title='Go to Dashboard' 
               className='w-56 h-14 mt-12'
               textClassName='text-lg'
-              onPress={() => router.push("/(tabs)")}
+              onPress={() => {
+                router.push("/(tabs)");
+              }}
             />
         </View>
 

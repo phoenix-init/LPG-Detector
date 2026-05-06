@@ -16,6 +16,11 @@ declare global {
         iconClassName?: string;
         iconSize?: string;
     }
+
+    interface TabIconProps {
+        focused: boolean;
+        icon: ImageSourcePropType;
+    }
 }
 
 export {};
