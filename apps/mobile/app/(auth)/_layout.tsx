@@ -1,18 +1,15 @@
 import React from 'react'
 import { Redirect, Stack } from 'expo-router'
+import { authClient } from '@/lib/auth-client'
 
 const Layout = () => {
-  const isSignedIn = true;
-  const isSuccess = true;
 
-  if(isSuccess) {
+  const { data: isSignedIn } = authClient.useSession();
+  
+  if(isSignedIn) {
     return <Redirect href="/(tabs)" />
   }
 
-  if(isSignedIn) {
-    return <Redirect href="/(connected)" />
-  }
-  
   return (
     <Stack screenOptions={{ headerShown: false }}/>
   )

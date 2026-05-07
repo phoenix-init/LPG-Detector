@@ -8,35 +8,58 @@ import { icons } from '@/constants/icon'
 import { router } from 'expo-router'
 import { BlurView } from 'expo-blur'
 import Modal from 'react-native-modal'
+import { sendOtp, verifyOtp, signInWithGoogle, checkPhoneExists } from '@/lib/auth-actions'
 
 const SignUp = () => {
   
-  const [form, setForm] = useState({
-    name: '',
-    phone: '',
-    otp: ''
-  })
-  
+  const [form, setForm] = useState({ name: '', phone: '', otp: '' })
   const [isOtpSent, setIsOtpSent] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [disable, setDisable] = useState(false)
 
-  const handleCreateAccount = () => {
-    console.log("Form Data to send to backend:", form)
-    // Send form data to backend here
-    // Simulating a backend error so you can see the UI!
-    setError("Invalid OTP. Please check the code sent to your phone.")
+  const handleCreateAccount = async () => {
+    setError(null)
+    setDisable(true)
+
+    const name = form.name.trim();
+    
+    const { error } = await verifyOtp(form.phone, form.otp, name)
+
+    setDisable(false)
+    if (error) setError(error)
   }
 
-  const handleOTPSend = () => {
-    console.log("OTP Sent from Backend:")
-    setIsOtpSent(true)
-    // Send form data to backend here
+  const handleOTPSend = async () => {
+    setError(null)
+    setDisable(true)
+    
+    const check = await checkPhoneExists(form.phone)
+
+    if (check.error) {
+      setError(check.error)
+      setDisable(false)
+      return
+    }
+    
+    if (check.exists) {
+      setError("Account already exists. Please log in instead.")
+      setDisable(false)
+      return
+    }
+
+    const { error } = await sendOtp(form.phone)
+    setDisable(false)
+    if (error) {
+      setError(error)
+    } else {
+      setIsOtpSent(true)
+    }
   }
 
-  const handleGoogleAuth = () => {
-    console.log("Google Auth")
-    // Send form data to backend here
+  const handleGoogleAuth = async () => {
+    setError(null)
+    const { error } = await signInWithGoogle()
+    if (error) setError(error)
   }
 
   return (
@@ -47,6 +70,7 @@ const SignUp = () => {
           animationIn="slideInDown" 
           animationOut="slideOutUp" 
           backdropOpacity={0.6} 
+          useNativeDriver={false}
           onBackdropPress={() => setError(null)}
           style={{ margin: 0, justifyContent: 'flex-start', paddingTop: 60, paddingHorizontal: 20 }}
         >
@@ -87,8 +111,9 @@ const SignUp = () => {
                 value={form.phone}
                 maxLength={10}
                 onChangeText={(value) => setForm({ ...form, phone: value })}
+                editable={!isOtpSent}
                 rightElement={
-                  <LiquidGlassButton disabled={disable} title="Send OTP" onPress={handleOTPSend} className="w-[105px] h-[46px]" textClassName="text-[13px]" />
+                  <LiquidGlassButton disabled={disable || form.name.trim().length <= 0 || form.phone.length < 10 || isOtpSent} title="Send OTP" onPress={handleOTPSend} className="w-[105px] h-[46px]" textClassName="text-[13px]" />
                 }
               />
               <InputField 
@@ -104,7 +129,7 @@ const SignUp = () => {
             <View className='w-full items-center gap-y-5 mb-8'>
 
               <LiquidGlassButton 
-                disabled={!form.name || !form.phone || !form.otp}
+                disabled={!form.name.trim() || !form.phone || !form.otp || !isOtpSent}
                 title="Create Account" 
                 onPress={handleCreateAccount} 
                 className="w-56 h-14"
