@@ -13,15 +13,14 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(uuid())
-  name         String
-  email        String?        @unique
-  phoneNumber  String?        @unique
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  deviceAccess DeviceAccess[]
-
-  emailVerified       Boolean   @default(false)
+  id                  String         @id @default(uuid())
+  name                String
+  email               String?        @unique
+  phoneNumber         String?        @unique
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  deviceAccess        DeviceAccess[]
+  emailVerified       Boolean        @default(false)
   image               String?
   phoneNumberVerified Boolean?
   sessions            Session[]
