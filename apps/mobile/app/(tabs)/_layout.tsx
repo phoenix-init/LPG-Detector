@@ -5,7 +5,10 @@ import CustomNavBar from '@/components/tab-bar/CustomNavbar'
 const TabLayout = () => {
   return (
     <Tabs
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ 
+        headerShown: false,
+        sceneStyle: { backgroundColor: 'transparent' }
+      }}
       tabBar={(props) => <CustomNavBar {...props} />}
     >
       <Tabs.Screen name="index"     options={{ title: 'Home'      }} />

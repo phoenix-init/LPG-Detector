@@ -1,14 +1,13 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import AuthBackground from '@/components/ui/AuthBackground'
 
 const analytics = () => {
   return (
-    <AuthBackground>
+    <View className="flex-1">
       <View>
         <Text>analytics</Text>
       </View>
-    </AuthBackground>
+    </View>
   )
 }
 

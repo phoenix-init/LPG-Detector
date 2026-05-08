@@ -4,14 +4,15 @@ import { authClient } from '@/lib/auth-client'
 
 const Layout = () => {
 
-  const { data: isSignedIn } = authClient.useSession();
+  // const { data: isSignedIn } = authClient.useSession();
+  const isSignedIn = true;
   
   if(isSignedIn) {
     return <Redirect href="/(tabs)" />
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}/>
+    <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: 'transparent' }, animation: 'fade' }}/>
   )
 }
 

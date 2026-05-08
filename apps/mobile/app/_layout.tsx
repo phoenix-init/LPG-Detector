@@ -4,6 +4,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
+import AuthBackground from "@/components/ui/AuthBackground";
 
 const RootContent = () => {
 
@@ -21,18 +22,19 @@ const RootContent = () => {
   }, [fontsLoaded])
 
   if (!fontsLoaded) {
-    return null
+    return null;
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="welcome" />
-      <Stack.Screen name="(auth)" />
-      <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="(connected)" />
-    </Stack>
-  )
-}
+    <AuthBackground>
+      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: 'transparent' }, animation: 'fade' }}>
+        <Stack.Screen name="welcome" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(connected)" />
+      </Stack>
+    </AuthBackground>
+)}
 
 export default function RootLayout() {
   return (

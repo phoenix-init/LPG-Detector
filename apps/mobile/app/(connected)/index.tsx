@@ -1,6 +1,5 @@
 import { Text, View, KeyboardAvoidingView, ScrollView, Platform, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import AuthBackground from '@/components/ui/AuthBackground'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import InputField from '@/components/ui/InputField'
 import LiquidGlassButton from '@/components/ui/LiquidGlass'
@@ -49,7 +48,6 @@ const Index = () => {
   }
 
   return (
-    <AuthBackground>
       <SafeAreaView style={{ flex: 1 }}>
         <Modal 
           isVisible={!!error} 
@@ -132,7 +130,6 @@ const Index = () => {
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
-    </AuthBackground>
   )
 }
 

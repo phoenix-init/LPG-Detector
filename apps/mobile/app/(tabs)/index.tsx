@@ -1,14 +1,13 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import AuthBackground from '@/components/ui/AuthBackground'
 
 const index = () => {
   return (
-    <AuthBackground>
+    <View className="flex-1">
       <View>
         <Text>index</Text>
       </View>
-    </AuthBackground>
+    </View>
   )
 }
 

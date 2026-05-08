@@ -2,7 +2,6 @@ import { Text, View } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BlurView } from 'expo-blur'
-import AuthBackground from '@/components/ui/AuthBackground'
 import { useDeviceIdStore } from '@/store/useDeviceId'
 import LiquidGlassButton from '@/components/ui/LiquidGlass'
 import { router } from 'expo-router'
@@ -11,7 +10,6 @@ export default function SuccessScreen() {
   const { deviceId } = useDeviceIdStore();
    
   return (
-    <AuthBackground>
       <SafeAreaView style={{ flex: 1 }}>
         
         <View className='items-center mt-16 mb-10'>
@@ -64,6 +62,5 @@ export default function SuccessScreen() {
         </View>
 
       </SafeAreaView>
-    </AuthBackground>
   )
 }
