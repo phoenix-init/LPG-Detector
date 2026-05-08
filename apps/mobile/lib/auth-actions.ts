@@ -64,12 +64,9 @@ export async function verifyOtp(
   }
 
   if (name) {
-    console.log(name);
-    
     const { error: updateError } = await authClient.updateUser({
       name
     });
-    console.log(updateError);
 
     if (updateError) {
       console.error("Failed to update user name:", updateError);
