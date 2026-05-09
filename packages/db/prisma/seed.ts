@@ -112,7 +112,68 @@ async function main() {
   console.log('✅ Seeding complete! Your dashboard is going to look awesome.');
 }
 
-main()
+async function deviceAccess() {
+  console.log('🌱 Starting relation and history seeding...');
+
+  const targetUserId = 'fTEE7GfdT1QMoRgBbZitFnRDFG7TwXeU';
+
+  const allDevices = await prisma.ioTDevice.findMany();
+
+  if (allDevices.length === 0) {
+    console.error('❌ No devices found! Please seed devices first.');
+    return;
+  }
+  const myDevices = allDevices.slice(0, 3);
+
+  for (const device of myDevices) {
+    await prisma.deviceAccess.upsert({
+      where: {
+        // This targets the @@unique([userId, deviceId]) constraint in your schema
+        userId_deviceId: {
+          userId: targetUserId,
+          deviceId: device.id,
+        },
+      },
+      update: {}, // Leave it alone if it's already linked
+      create: {
+        userId: targetUserId,
+        deviceId: device.id,
+        role: 'OWNER',
+      },
+    });
+    console.log(`🔗 Linked device: ${device.name} to your account`);
+
+    // 4. Generate historical data so your app's history/logs aren't empty
+    // We will simulate 12 readings over the past 24 hours (1 every 2 hours)
+    const readingsToInsert = [];
+    const now = new Date();
+
+    for (let i = 0; i < 12; i++) {
+      // Subtract hours to go back in time
+      const pastDate = new Date(now.getTime() - i * 2 * 60 * 60 * 1000); 
+
+      // MAGIC TOUCH: Let's artificially create a "Leak Event" that happened 
+      // 6 hours ago on your Main Sensor just to prove your UI can show history!
+      const isLeakingEvent = i === 3 && device.name.includes("Main");
+
+      readingsToInsert.push({
+        deviceId: device.id,
+        isLeaking: isLeakingEvent,
+        timestamp: pastDate,
+      });
+    }
+
+    // Insert the batch of history into the database
+    await prisma.sensorReading.createMany({
+      data: readingsToInsert,
+    });
+    console.log(`📊 Generated 24-hour history log for ${device.name}`);
+  }
+
+  console.log('🎉 Seeding complete! Log into Expo and check your dashboard.');
+}
+
+deviceAccess()
   .catch((e) => {
     console.error('❌ Seeding failed:', e);
     process.exit(1);
