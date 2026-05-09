@@ -11,7 +11,7 @@ const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpaci
 
 const CustomNavBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
   const insets = useSafeAreaInsets();
-  const bottom = Math.max(insets.bottom + 22, 20);
+  const bottom = Math.max(insets.bottom + 10, 10);
 
   return (
     <View style={[styles.wrapper, { bottom }]}>

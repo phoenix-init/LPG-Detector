@@ -1,4 +1,4 @@
-import { Text, View, KeyboardAvoidingView, ScrollView, Platform, TouchableOpacity } from 'react-native'
+import { Text, View, KeyboardAvoidingView, ScrollView, Platform, TouchableOpacity, Image } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import InputField from '@/components/ui/InputField'
@@ -134,7 +134,7 @@ const SignUp = () => {
                 textClassName="text-lg"
               />
               <LiquidGlassButton 
-                icon={icons.google} 
+                icon={({ className }: any) => <Image source={icons.google} className={className} style={{ width: 24, height: 24 }} />} 
                 title='Continue With Google' 
                 onPress={handleGoogleAuth} 
                 className="w-72 h-14"

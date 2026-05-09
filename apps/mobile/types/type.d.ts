@@ -1,4 +1,4 @@
-import { ImageSourcePropType, InputModeOptions, TextInputProps } from "react-native";
+import { ImageSourcePropType, InputModeOptions, TextInputProps, LucideIcon } from "react-native";
 
 declare global {
     interface InputFieldProps extends TextInputProps {
@@ -9,7 +9,7 @@ declare global {
     interface LiquidGlassButtonProps {
         title?: string;
         onPress: () => void;
-        icon?: ImageSourcePropType;
+        icon?: any;
         className?: string;
         textClassName?: string;
         disabled?: boolean;
@@ -21,6 +21,19 @@ declare global {
         focused: boolean;
         icon: ImageSourcePropType;
     }
+
+    interface SystemDiagnosticCardProps {
+        id: number;
+        title: string;
+        reading: string;
+        icon: LucideIcon;
+    }
+
+    interface LeakDetectionProps {
+    status: "Leak" | "Warning" | "Safe"
+    message: string;
+    description: string;
+}
 }
 
 export {};

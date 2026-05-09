@@ -1,13 +1,13 @@
-import { Text, View, KeyboardAvoidingView, ScrollView, Platform, TouchableOpacity } from 'react-native'
+import { Text, View, KeyboardAvoidingView, ScrollView, Platform, TouchableOpacity, Image } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import InputField from '@/components/ui/InputField'
 import LiquidGlassButton from '@/components/ui/LiquidGlass'
-import { icons } from '@/constants/icon'
 import { router } from 'expo-router'
 import { BlurView } from 'expo-blur'
 import Modal from 'react-native-modal'
 import { sendOtp, verifyOtp, signInWithGoogle, checkPhoneExists } from '@/lib/auth-actions'
+import { icons } from '@/constants/icon'
 
 const SignIn = () => {
   
@@ -123,7 +123,7 @@ const SignIn = () => {
                 textClassName="text-lg"
               />
               <LiquidGlassButton 
-                icon={icons.google} 
+                icon={({ className }: any) => <Image source={icons.google} className={className} style={{ width: 24, height: 24 }} />} 
                 title='Continue With Google' 
                 onPress={handleGoogleAuth} 
                 className="w-72 h-14"
