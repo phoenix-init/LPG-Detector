@@ -34,6 +34,8 @@ model IoTDevice {
   name                 String
   serialNumber         String          @unique
   isOnline             Boolean         @default(false)
+  valveOpen            Boolean         @default(false)
+  maintenanceStatus    Boolean         @default(false)
   consecutiveLeakCount Int             @default(0)
   createdAt            DateTime        @default(now())
   updatedAt            DateTime        @updatedAt
@@ -44,12 +46,12 @@ model IoTDevice {
 }
 
 model SensorReading {
-  id        String    @id @default(uuid())
-  deviceId  String
-  gasLevel  Float
-  isLeaking Boolean
-  timestamp DateTime  @default(now())
-  device    IoTDevice @relation(fields: [deviceId], references: [id])
+  id          String    @id @default(uuid())
+  deviceId    String
+  isLeaking   Boolean   @default(false)
+  powerSource String
+  timestamp   DateTime  @default(now())
+  device      IoTDevice @relation(fields: [deviceId], references: [id])
 
   @@index([deviceId, timestamp(sort: Desc)])
   @@map("sensor_readings")
