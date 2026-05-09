@@ -5,7 +5,7 @@ import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanim
 import { BlurView } from 'expo-blur';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { tab } from '@/constants/data';
-import { BUBBLE_BG, GLASS_BG, ACTIVE_COLOR, INACTIVE_COLOR, ITEM_H, V_PAD, TAB_H, TAB_R, ITEM_R } from '@/constants/theme';
+import { BUBBLE_BG, GLASS_BG, ACTIVE_COLOR, INACTIVE_COLOR, ITEM_H, V_PAD, TAB_H, TAB_R, ITEM_R, LABEL_COLOR } from '@/constants/theme';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
@@ -59,7 +59,7 @@ const CustomNavBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigat
               <Icon
                 size={26}
                 strokeWidth={isFocused ? 2 : 1.5}
-                color={isFocused ? ACTIVE_COLOR : INACTIVE_COLOR}
+                color={isFocused ? LABEL_COLOR : INACTIVE_COLOR}
               />
             ) : null}
 
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   label: {
-    color: ACTIVE_COLOR,
+    color: LABEL_COLOR,
     fontSize: 13,
     fontWeight: '500',
     letterSpacing: 0.1,
