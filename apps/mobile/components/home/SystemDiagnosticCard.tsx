@@ -20,7 +20,7 @@ const SystemDiagnosticCard = ({ items }: { items: SystemDiagnosticCardProps[] })
                             className="text-white font-sf-light tracking-wide text-[15px]"
                             numberOfLines={1}
                         >
-                            {item.title}
+                            {item.label}
                         </Text>
                         <Text className="font-sf-semibold tracking-wide text-[#4CFF1A]/[0.57] text-[14px]">{item.reading}</Text>
                     </View>

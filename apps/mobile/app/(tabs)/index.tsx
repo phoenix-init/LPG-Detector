@@ -12,19 +12,19 @@ const index = () => {
   const SystemDiagnosticItems: SystemDiagnosticCardProps[] = [
       {
           id: 1,
-          title: "Sensor Status",
+          label: "Sensor Status",
           reading: "Connected",
           icon: Activity
       },
       {
           id: 2,
-          title: "Power Source",
+          label: "Power Source",
           reading: "AC Adapter",
           icon: BatteryCharging
       },
       {
           id: 3,
-          title: "Active Leaks",
+          label: "Active Leaks",
           reading: "None",
           icon: History
       }
