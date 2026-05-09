@@ -4,8 +4,8 @@ import { authClient } from '@/lib/auth-client'
 
 const Layout = () => {
 
-  // const { data: isSignedIn } = authClient.useSession();
-  const isSignedIn = true;
+  const { data: isSignedIn } = authClient.useSession();
+  // const isSignedIn = true;
   
   if(isSignedIn) {
     return <Redirect href="/(tabs)" />
