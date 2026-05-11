@@ -17,6 +17,7 @@ model User {
   name                String
   email               String?        @unique
   phoneNumber         String?        @unique
+  expoPushToken       String?
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
   deviceAccess        DeviceAccess[]
