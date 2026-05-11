@@ -25,12 +25,12 @@ declare global {
     interface SystemDiagnosticCardProps {
         id: number;
         label: string;
-        reading: string;
+        reading: string | number;
         icon: LucideIcon;
     }
 
     interface LeakDetectionProps {
-        status: "Leak" | "Warning" | "Safe"
+        status: "Leak" | "Safe"
         message: string;
         description: string;
     }

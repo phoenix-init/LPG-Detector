@@ -3,24 +3,39 @@ import { Tabs } from 'expo-router'
 import CustomNavBar from '@/components/tab-bar/CustomNavbar'
 import { authClient } from '@/lib/auth-client'
 import { useUser } from '@/store/useUser'
+import axios from 'axios'
+// import usePushNotifications from '@/hooks/usePushNotification'
 
 const TabLayout = () => {
   const { data: session } = authClient.useSession()
-  const { setUser, clearUser } = useUser()
+  const { setUser } = useUser()
+
+  // usePushNotifications(session?.user?.id);
 
   useEffect(() => {
-    if (session?.user) {
-      setUser({
-        id:             session.user.id,
-        name:           session.user.name,
-        email:          session.user.email ?? undefined,
-        phoneNumber:    (session.user as any).phoneNumber ?? undefined,
-        profilePicture: session.user.image ?? undefined,
-      })
-    } else {
-      clearUser()
+    const fetchUserDetails = async() => {
+      try{
+        const response = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/api/users/me`, {
+          headers: {
+            Authorization: `Bearer ${session?.session.token}`,
+            "Content-Type": "application/json"
+          }
+        })
+
+        if(response.data.success){
+          setUser(response.data.data)
+        }
+
+      }catch(error){
+        console.error("Failed to fetch user details:", error);
+      }
     }
-  }, [session, setUser, clearUser])
+
+    if (session?.session.token){
+      fetchUserDetails();
+    }
+    
+  }, [session, setUser])
 
   return (
     <Tabs
