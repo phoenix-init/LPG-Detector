@@ -5,6 +5,7 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from "./auth";
 import { env } from "./validator/env";
 import router from "./routes";
+import { setupMqtt } from "./lib/mqtt";
 
 const app = express();
 
@@ -28,4 +29,5 @@ app.use("/api", router);
 
 app.listen(8000, () => {
     console.log("Server is running on port 8000");
+    setupMqtt();
 })
