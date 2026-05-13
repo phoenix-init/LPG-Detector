@@ -9,6 +9,8 @@ export const mqttClient = mqtt.connect("mqtt://broker.hivemq.com:1883");
 const lastNotificationTimes = new Map<string, number>();
 const NOTIFICATION_COOLDOWN_MS = 60 * 1000; // 1 minute cooldown
 
+const deviceLastState = new Map<string, string>();
+
 export const setupMqtt = () => {
   mqttClient.on("connect", () => {
     console.log("Connected to HiveMQ Broker!");
@@ -18,8 +20,22 @@ export const setupMqtt = () => {
   mqttClient.on("message", async (topic, message) => {
     if (topic === "gasSystem/status") {
       const data = JSON.parse(message.toString());
+      const deviceId = "ESP32-HARDCODED-ID";
 
-      console.log(data);
+      const currentStateStr = JSON.stringify({
+        leak: data.leak,
+        valveOpen: data.valveOpen,
+        maintenanceStatus: data.maintenanceStatus,
+        powerSource: data.powerSource,
+        isConnected: data.isConnected
+      });
+
+      if (deviceLastState.get(deviceId) === currentStateStr) return;
+
+
+      deviceLastState.set(deviceId, currentStateStr);
+
+      console.log("New state detected, updating database:", data);
       
       const isLeaking = data.leak === true || data.leak === "true";       
       const valveOpen = data.valveOpen === true || data.valveOpen === "true";
