@@ -8,7 +8,7 @@ import { useUser } from '@/store/useUser'
 const GasValve = ({ onPress }: { onPress: () => void }) => {
 
   const { user } = useUser();
-  const isValveOpen = user?.devices[0].valveOpen;
+  const isValveOpen = user?.devices?.[0]?.valveOpen ?? false;
 
   return (
     <SmogCard>

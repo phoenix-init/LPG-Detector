@@ -9,7 +9,7 @@
     "node:start": "node dist/server.js",
     "build": "bun build src/server.ts --minify --outdir ./dist --target node",
     "clean": "rm -rf dist && echo 'Cleaned dist'",
-    "tunnel": ".\\ngrok.exe http 8000"
+    "tunnel": "./ngrok http --url=duller-pacific-entomb.ngrok-free.dev 8000"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +29,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@ngrok/ngrok": "^1.7.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/cors": "^2.8.19",

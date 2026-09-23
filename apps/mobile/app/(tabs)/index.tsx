@@ -15,7 +15,7 @@ const Index = () => {
   
   const { data: session } = authClient.useSession();
   const { user, updateDeviceStatus } = useUser();
-  const sensorStatus = user?.devices[0];
+  const sensorStatus = user?.devices?.[0];
 
   useEffect(() => {
     if (!sensorStatus?.serialNumber) return;

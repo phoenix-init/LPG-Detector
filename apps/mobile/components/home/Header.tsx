@@ -6,8 +6,9 @@ import { useUser } from '@/store/useUser'
 const Header = () => {
   const { user } = useUser();
 
-  const name = user?.devices[0].name
-  const isConnected = user?.devices[0].isOnline
+  const device = user?.devices?.[0];
+  const name = device?.name ?? 'No Device';
+  const isConnected = device?.isOnline ?? false;
 
   return (
     <View>

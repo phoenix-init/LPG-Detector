@@ -30,6 +30,9 @@ export const setupMqtt = () => {
         isConnected: data.isConnected
       });
 
+      console.log(deviceLastState.get(deviceId))
+      console.log(currentStateStr)
+
       if (deviceLastState.get(deviceId) === currentStateStr) return;
 
 
@@ -44,15 +47,45 @@ export const setupMqtt = () => {
       const isConnected = data.isConnected === true || data.isConnected === "true";
 
       try {
-        await prisma.ioTDevice.update({
+        const device = await prisma.ioTDevice.upsert({
           where: { serialNumber: "ESP32-HARDCODED-ID" },
-          data: {
+          update: {
+            valveOpen,
+            maintenanceStatus,
+            powerSource: powerSource.toUpperCase(),
+            isOnline: isConnected,
+          },
+          create: {
+            serialNumber: "ESP32-HARDCODED-ID",
+            name: "LPG Gas Detector",
             valveOpen,
             maintenanceStatus,
             powerSource: powerSource.toUpperCase(),
             isOnline: isConnected,
           }
         });
+
+        // Ensure all registered users are linked to this device
+        const usersWithoutAccess = await prisma.user.findMany({
+          where: {
+            deviceAccess: {
+              none: {
+                deviceId: device.id
+              }
+            }
+          }
+        });
+
+        if (usersWithoutAccess.length > 0) {
+          await prisma.deviceAccess.createMany({
+            data: usersWithoutAccess.map((u) => ({
+              userId: u.id,
+              deviceId: device.id,
+              role: "OWNER"
+            })),
+            skipDuplicates: true
+          });
+        }
 
         const updateResult = await prisma.sensorReading.updateMany({
           where: {
